@@ -15,7 +15,18 @@ Including another URLconf
 """
 from . import views
 from django.urls import path
+from filebrowser.sites import site
+from django.conf.urls import url,include
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 app_name= "main"
 urlpatterns = [
+    path('admin/filebrowser/', site.urls),
+    path('grappelli/', include('grappelli.urls')),
     path("",views.homepage,name="homepage"),
-]
+    url(r'^tinymce/', include('tinymce.urls'))
+    
+    
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
